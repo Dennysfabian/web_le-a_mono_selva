@@ -295,6 +295,81 @@
 
     /* ── Section wrappers ── */
     .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ══════════════════════════════════════════════════════
+       MOBILE — RESPONSIVE FIXES
+    ══════════════════════════════════════════════════════ */
+
+    /* Nav: ocultar links de texto en móvil */
+    @media (max-width: 640px) {
+      #main-nav { padding: 0.85rem 1.1rem; }
+      .nav-links-wrap .nav-link { display: none !important; }
+      .nav-links-wrap { gap: 0.5rem !important; }
+      .section-wrap { padding: 0 1.1rem; }
+    }
+
+    /* Esencia: grid responsivo */
+    .esencia-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .esencia-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .esencia-img { height: 320px !important; }
+      .esencia-badge { left: 1rem !important; top: 1rem !important; }
+    }
+
+    /* Testimonios: grid responsivo */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .testi-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Contacto: grid responsivo */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    /* Horario: apilar en pantallas muy pequeñas */
+    @media (max-width: 440px) {
+      .h-row { flex-direction: column !important; gap: 0.15rem; padding: 0.65rem 0 !important; }
+    }
+
+    /* Bento: 1 columna en pantallas muy pequeñas */
+    @media (max-width: 480px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 260px 220px 220px 220px;
+      }
+      .b1 { grid-column: 1 !important; grid-row: 1 !important; }
+      .b2 { grid-column: 1 !important; grid-row: 2 !important; }
+      .b3 { grid-column: 1 !important; grid-row: 3 !important; }
+      .b4 { grid-column: 1 !important; grid-row: 4 !important; }
+    }
+
+    /* Secciones: reducir padding vertical en móvil */
+    @media (max-width: 640px) {
+      #esencia    { padding: 4rem 0 !important; }
+      #servicios  { padding: 4rem 0 !important; }
+      #contacto   { padding: 4rem 0 !important; }
+    }
   </style>
 </head>
 
@@ -312,7 +387,7 @@
       Leña <em style="color:#C8841A;">al Mono</em>
     </span>
   </a>
-  <div style="display:flex; gap:2rem; align-items:center;">
+  <div class="nav-links-wrap" style="display:flex; gap:2rem; align-items:center;">
     <a href="#especialidades" class="nav-link" style="display:none;" id="nav-carta">Carta</a>
     <a href="#servicios" class="nav-link">Servicios</a>
     <a href="#contacto" class="nav-link">Horario</a>
@@ -428,7 +503,7 @@
        class="mono-watermark"
        style="left:-40px; top:50%; transform:translateY(-50%); width:200px; opacity:0.04;" />
   <div class="section-wrap" style="position:relative; z-index:2;">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
+    <div class="esencia-grid">
 
       <!-- Image block -->
       <div class="reveal" style="position:relative;">
@@ -437,13 +512,14 @@
              Efecto entrada: fade desde izquierda (añadir translateX(-40px) en reveal inicial si se desea). -->
         <img src="imagenes/interior_dos.webp"
              alt="Interior auténtico de Leña al Mono con decoración ecuatoriana"
+             class="esencia-img"
              style="width:100%; height:580px; object-fit:cover; display:block;" />
 
         <!-- Amber border offset -->
         <div style="position:absolute; bottom:-14px; right:-14px; width:calc(100% - 1.5rem); height:calc(100% - 1.5rem); border:1px solid rgba(200,132,26,0.28); pointer-events:none;"></div>
 
         <!-- Floating stat badge -->
-        <div style="position:absolute; top:2rem; left:-1.5rem; background:#C8841A; color:#0F0D0B; padding:1rem 1.2rem; text-align:center; line-height:1.15;">
+        <div class="esencia-badge" style="position:absolute; top:2rem; left:-1.5rem; background:#C8841A; color:#0F0D0B; padding:1rem 1.2rem; text-align:center; line-height:1.15;">
           <p class="font-display" style="font-weight:900; font-size:2.1rem;">+500</p>
           <p style="font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; margin-top:0.15rem;">Reseñas ⭐</p>
         </div>
@@ -650,7 +726,7 @@
       </h2>
     </div>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:880px; margin:0 auto;">
+    <div class="testi-grid">
 
       <!-- Testimonio 1 -->
       <div class="reveal testi-card" style="padding:2.5rem; position:relative;">
@@ -693,7 +769,7 @@
 ════════════════════════════════════════════════════════ -->
 <section id="contacto" style="padding:8rem 0;">
   <div class="section-wrap">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;">
+    <div class="contact-grid">
 
       <!-- Horarios + Dirección -->
       <div>
