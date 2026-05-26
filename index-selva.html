@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sabores ecuatorianos a la leña en Barcelona. Carnes, mariscos, ceviche y tradición. Reserva tu mesa en L'Hospitalet de Llobregat." />
+  <meta property="og:title" content="Leña al Mono — Auténtica Parrilla Ecuatoriana" />
+  <meta property="og:description" content="Fuego, tradición y sabores del Ecuador que despiertan el alma." />
+  <title>Leña al Mono — Auténtica Parrilla Ecuatoriana | Versión Selva · Barcelona</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="imagenes/logo_mono.png" type="image/png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN (desarrollo / preview) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ember: '#C8841A',
+            'ember-light': '#E8A030',
+            coal: '#090E07',
+            ash: '#0E1A0B',
+            cream: '#F0EBE1',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #090E07; color: #F0EBE1; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .font-display { font-family: 'Playfair Display', serif; }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+    .d5 { transition-delay: 0.5s; }
+
+    /* ── Hero ── */
+    .hero-bg {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ken Burns: imagen de fondo viva */
+    @keyframes kenBurns {
+      0%   { transform: scale(1)    translateX(0)     translateY(0); }
+      33%  { transform: scale(1.08) translateX(-1.5%) translateY(-1%); }
+      66%  { transform: scale(1.05) translateX(1.5%)  translateY(1%); }
+      100% { transform: scale(1)    translateX(0)     translateY(0); }
+    }
+    .hero-img-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      animation: kenBurns 20s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg,
+        rgba(7,12,5,0.92) 0%,
+        rgba(9,16,6,0.52) 45%,
+        rgba(7,12,5,0.83) 100%);
+    }
+
+    /* Embers / brasas flotantes */
+    .embers-wrap {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 4;
+    }
+
+    /* Logo hero: pulso de brasa */
+    @keyframes logoBrasa {
+      0%, 100% { filter: drop-shadow(0 0 28px rgba(200,132,26,0.4)) drop-shadow(0 0 8px rgba(200,132,26,0.2)); transform: scale(1); }
+      50%       { filter: drop-shadow(0 0 55px rgba(200,132,26,0.75)) drop-shadow(0 0 20px rgba(232,160,48,0.4)); transform: scale(1.025); }
+    }
+    .hero-logo-img {
+      animation: logoBrasa 4s ease-in-out infinite;
+      display: block;
+      margin: 0 auto;
+      border-radius: 50%;
+      width: clamp(180px, 28vw, 280px);
+      height: clamp(180px, 28vw, 280px);
+      object-fit: contain;
+    }
+
+    /* ── Buttons ── */
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 18px rgba(200,132,26,0.5); }
+      50%       { box-shadow: 0 0 45px rgba(200,132,26,0.95), 0 0 90px rgba(200,132,26,0.3); }
+    }
+    .btn-ember {
+      display: inline-block;
+      background: linear-gradient(135deg, #C8841A, #E8A030);
+      color: #090E07;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    .btn-ember:hover { transform: scale(1.05); }
+
+    .btn-outline {
+      display: inline-block;
+      background: transparent;
+      color: #F0EBE1;
+      border: 1px solid rgba(240,235,225,0.35);
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover { border-color: #C8841A; color: #C8841A; }
+
+    /* ── Divider ── */
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, #C8841A, transparent);
+      margin: 1.2rem 0;
+    }
+    .divider-center { margin: 1.2rem auto; }
+
+    /* ── Scroll Indicator ── */
+    @keyframes scrollDrop {
+      0%   { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(14px); opacity: 0; }
+    }
+    .scroll-dot { animation: scrollDrop 1.9s ease-in-out infinite; }
+
+    /* ── Marquee ── */
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 22s linear infinite; white-space: nowrap; display: inline-flex; gap: 3.5rem; }
+
+    /* ── Bento Grid ── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      grid-template-rows: 400px 280px;
+      gap: 10px;
+    }
+    .b1 { grid-column: 1; grid-row: 1 / 3; }
+    .b2 { grid-column: 2 / 4; grid-row: 1; }
+    .b3 { grid-column: 2; grid-row: 2; }
+    .b4 { grid-column: 3; grid-row: 2; }
+
+    @media (max-width: 820px) {
+      .bento-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 260px 220px 220px;
+      }
+      .b1 { grid-column: 1 / 3; grid-row: 1; }
+      .b2 { grid-column: 1; grid-row: 2; }
+      .b3 { grid-column: 2; grid-row: 2; }
+      .b4 { grid-column: 1 / 3; grid-row: 3; }
+    }
+
+    .bento-card { position: relative; overflow: hidden; }
+    .bento-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .bento-card:hover img { transform: scale(1.07); }
+    .bento-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(7,12,5,0.90) 0%, rgba(7,12,5,0.1) 55%, transparent 100%);
+    }
+    .bento-shine {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(45,122,58,0.18), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .bento-card:hover .bento-shine { opacity: 1; }
+
+    /* ── Service cards ── */
+    .service-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
+    @media (max-width: 820px) {
+      .service-grid { grid-template-columns: 1fr; }
+      .sc-chillout { grid-column: 1 !important; }
+    }
+    .sc-chillout { grid-column: 1; grid-row: 1 / 3; min-height: 480px; }
+    .sc-eventos  { grid-column: 2; grid-row: 1; }
+    .sc-catering { grid-column: 2; grid-row: 2; }
+
+    .service-card {
+      background: #0E1A0B;
+      border: 1px solid rgba(45,122,58,0.18);
+      transition: border-color 0.3s, transform 0.3s;
+      overflow: hidden;
+    }
+    .service-card:hover { border-color: rgba(45,122,58,0.45); transform: translateY(-4px); }
+
+    /* ── Testimonials ── */
+    .testi-card {
+      background: #0E1A0B;
+      border: 1px solid rgba(200,132,26,0.1);
+      transition: transform 0.35s, border-color 0.35s;
+    }
+    .testi-card:hover { transform: translateY(-7px); border-color: rgba(200,132,26,0.35); }
+
+    /* ── Hours table ── */
+    .h-row { border-bottom: 1px solid rgba(240,235,225,0.06); }
+    .h-row:last-child { border-bottom: none; }
+
+    /* ── Mono decorativo: animación flotante ── */
+    @keyframes monoFloat {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-5px) rotate(3deg); }
+    }
+    /* Monito pequeño acompañante de sección */
+    .mono-eyebrow {
+      height: 22px;
+      display: inline-block;
+      animation: monoFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 6px rgba(200,132,26,0.35));
+    }
+    /* Monito watermark fondo */
+    .mono-watermark {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+    }
+
+    /* ── Nav ── */
+    #main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.4rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(to bottom, rgba(7,12,5,0.93), transparent);
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    #main-nav.scrolled {
+      background: rgba(7,12,5,0.97);
+      backdrop-filter: blur(12px);
+    }
+    .nav-link {
+      color: rgba(240,235,225,0.65);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-link:hover { color: #C8841A; }
+
+    /* ── Map dark filter ── */
+    .map-frame {
+      filter: grayscale(1) invert(0.88) contrast(0.85) sepia(0.25);
+    }
+
+    /* ── Section wrappers ── */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <a href="#inicio" style="text-decoration:none; display:flex; align-items:center; gap:0.75rem;">
+    <img src="imagenes/logo_mono_clean.png"
+         alt="Leña al Mono logo"
+         style="height:38px; width:auto; flex-shrink:0; filter: drop-shadow(0 0 6px rgba(200,132,26,0.5));" />
+    <span class="font-display" style="font-size:1.25rem; font-weight:900; color:#F0EBE1; letter-spacing:0.04em; line-height:1.1;">
+      Leña <em style="color:#C8841A;">al Mono</em>
+    </span>
+  </a>
+  <div style="display:flex; gap:2rem; align-items:center;">
+    <a href="#especialidades" class="nav-link" style="display:none;" id="nav-carta">Carta</a>
+    <a href="#servicios" class="nav-link">Servicios</a>
+    <a href="#contacto" class="nav-link">Horario</a>
+    <a href="https://book.squareup.com/appointments/hcx6emfmutkvpv/location/LMCFB6GK0PKF1"
+       target="_blank" rel="noopener"
+       class="btn-ember" style="padding:0.55rem 1.4rem; font-size:0.68rem;">
+      Reservar
+    </a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
+<section id="inicio" class="hero-bg" style="display:flex; align-items:center; justify-content:center;">
+
+  <!-- Imagen de fondo con Ken Burns -->
+  <img src="imagenes/mariscada_parrilla.webp" alt="" aria-hidden="true" class="hero-img-bg" />
+
+  <div class="hero-overlay"></div>
+
+  <!-- Contenedor de brasas flotantes -->
+  <div class="embers-wrap" id="embersWrap"></div>
+
+  <!-- ══ HOJAS SELVA HERO ══ -->
+
+  <!-- Esquina top-left: cluster 3 hojas -->
+  <svg aria-hidden="true" style="position:absolute;top:-20px;left:-20px;width:260px;height:260px;pointer-events:none;z-index:3;opacity:0.28;" viewBox="0 0 260 260" fill="none">
+    <!-- Hoja grande principal -->
+    <path d="M10,240 C10,240 -15,120 55,45 C110,-15 200,5 220,65 C240,125 195,200 140,220 C90,238 10,240 10,240Z" fill="#1A5225"/>
+    <path d="M10,240 C70,190 130,140 220,65" stroke="#2D7A3A" stroke-width="2" fill="none" opacity="0.45"/>
+    <path d="M10,240 C55,175 110,115 220,65" stroke="#2D7A3A" stroke-width="1" fill="none" opacity="0.3"/>
+    <!-- Hoja media izquierda -->
+    <path d="M0,180 C0,180 -8,90 40,40 C78,-3 130,8 138,48 C146,88 120,140 85,155 C55,168 0,180 0,180Z" fill="#0F3A18" opacity="0.75"/>
+    <!-- Hoja pequeña punta -->
+    <path d="M30,120 C30,120 18,60 55,28 C82,5 115,14 118,42 C121,68 100,100 75,108 C52,115 30,120 30,120Z" fill="#265C2E" opacity="0.6"/>
+    <!-- Nervio central hoja pequeña -->
+    <path d="M30,120 C55,85 80,50 118,42" stroke="#3D8B3D" stroke-width="0.8" fill="none" opacity="0.4"/>
+  </svg>
+
+  <!-- Esquina top-right: hoja lateral -->
+  <svg aria-hidden="true" style="position:absolute;top:-15px;right:-15px;width:200px;height:210px;pointer-events:none;z-index:3;opacity:0.22;transform:scaleX(-1) rotate(-8deg);" viewBox="0 0 200 210" fill="none">
+    <path d="M8,195 C8,195 -10,100 50,35 C100,-15 175,8 188,60 C200,112 168,175 120,190 C78,204 8,195 8,195Z" fill="#1E5C28"/>
+    <path d="M8,195 C60,155 105,110 188,60" stroke="#2D7A3A" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M30,170 C15,100 70,35 145,18 C165,14 175,28 170,48" fill="#143D1C" opacity="0.55"/>
+  </svg>
+
+  <!-- Esquina bottom-right: hojas ascendentes -->
+  <svg aria-hidden="true" style="position:absolute;bottom:-15px;right:-10px;width:230px;height:220px;pointer-events:none;z-index:3;opacity:0.24;transform:rotate(175deg);" viewBox="0 0 230 220" fill="none">
+    <path d="M10,205 C10,205 -12,105 58,38 C112,-14 195,8 210,65 C225,122 188,190 135,208 C88,224 10,205 10,205Z" fill="#1A5225"/>
+    <path d="M10,205 C65,165 120,120 210,65" stroke="#2D7A3A" stroke-width="1.8" fill="none" opacity="0.4"/>
+    <path d="M25,185 C10,110 72,40 150,22" fill="#0F3A18" opacity="0.5"/>
+  </svg>
+
+  <!-- Esquina bottom-left: hoja pequeña -->
+  <svg aria-hidden="true" style="position:absolute;bottom:30px;left:-8px;width:120px;height:130px;pointer-events:none;z-index:3;opacity:0.16;transform:rotate(15deg);" viewBox="0 0 120 130" fill="none">
+    <path d="M5,122 C5,122 -4,55 38,18 C70,-10 110,8 115,42 C120,76 95,112 65,120 C40,127 5,122 5,122Z" fill="#2D7A3A"/>
+    <path d="M5,122 C42,88 72,55 115,42" stroke="#3D9A4A" stroke-width="1" fill="none" opacity="0.35"/>
+  </svg>
+
+  <!-- Content -->
+  <div style="position:relative; z-index:10; text-align:center; padding:0 1.5rem; max-width:820px; margin:0 auto;">
+
+    <!-- Eyebrow -->
+    <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:1rem; letter-spacing:0.22em; text-transform:uppercase; margin-bottom:2rem;">
+      L'Hospitalet de Llobregat · Barcelona
+    </p>
+
+    <!-- Logo principal hero con pulso de brasa -->
+    <div class="reveal d1" style="margin-bottom:2rem;">
+      <img src="imagenes/logo_redondo_mono.png"
+           alt="Leña al Mono"
+           class="hero-logo-img" />
+    </div>
+
+    <!-- Tagline -->
+    <p class="reveal d2 font-display" style="font-style:italic; font-size:clamp(1.1rem,2.5vw,1.5rem); color:rgba(240,235,225,0.8); line-height:1.65; margin-bottom:2.75rem; max-width:480px; margin-left:auto; margin-right:auto;">
+      Fuego, tradición y sabores del Ecuador<br/>que despiertan el alma.
+    </p>
+
+    <!-- CTAs -->
+    <div class="reveal d3" style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+      <a href="https://book.squareup.com/appointments/hcx6emfmutkvpv/location/LMCFB6GK0PKF1"
+         target="_blank" rel="noopener" class="btn-ember">
+        Reservar Mesa
+      </a>
+      <a href="https://get-qr.com/es/content/c7Nj1A"
+         target="_blank" rel="noopener" class="btn-outline">
+        Ver Carta
+      </a>
+    </div>
+  </div>
+
+  <!-- Mono watermark decorativo — fondo hero -->
+  <img src="imagenes/logo_mono_clean.png"
+       alt=""
+       aria-hidden="true"
+       class="mono-watermark"
+       style="right:4%; bottom:8%; width:300px; opacity:0.045;" />
+
+  <!-- Scroll indicator -->
+  <div style="position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); text-align:center; display:flex; flex-direction:column; align-items:center; gap:0.7rem;">
+    <span style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(240,235,225,0.38);">Descubre</span>
+    <div style="width:1px; height:48px; background:linear-gradient(to bottom,#C8841A,transparent); position:relative; overflow:hidden;">
+      <div class="scroll-dot" style="width:4px; height:4px; background:#C8841A; border-radius:50%; position:absolute; top:0; left:-1.5px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     MARQUEE STRIP
+════════════════════════════════════════════════════════ -->
+<div style="background:#C8841A; padding:0.85rem 0; overflow:hidden;">
+  <div class="marquee-track">
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Cocina Ecuatoriana</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">A la Leña</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <img src="imagenes/logo_mono_clean.png" alt="" aria-hidden="true" style="height:28px; vertical-align:middle; filter:brightness(0); opacity:0.35;" />
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Sabores Auténticos</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Parrilla & Mariscos</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Eventos & Catering</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Cocina Ecuatoriana</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">A la Leña</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <img src="imagenes/logo_mono_clean.png" alt="" aria-hidden="true" style="height:28px; vertical-align:middle; filter:brightness(0); opacity:0.35;" />
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Sabores Auténticos</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Parrilla & Mariscos</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+    <span class="font-display" style="font-style:italic; color:#090E07; font-size:1.05rem;">Eventos & Catering</span>
+    <span style="color:rgba(7,12,5,0.35);">✦</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     NUESTRA ESENCIA
+════════════════════════════════════════════════════════ -->
+<section id="esencia" style="padding:8rem 0; position:relative; overflow:hidden;">
+  <!-- Mono watermark fondo esencia -->
+  <img src="imagenes/logo_mono_clean.png" alt="" aria-hidden="true"
+       class="mono-watermark"
+       style="left:-40px; top:50%; transform:translateY(-50%); width:200px; opacity:0.04;" />
+
+  <!-- Hojas borde derecho esencia -->
+  <svg aria-hidden="true" style="position:absolute;right:-25px;top:50%;transform:translateY(-50%);width:160px;height:320px;pointer-events:none;opacity:0.14;" viewBox="0 0 160 320" fill="none">
+    <path d="M155,60 C155,60 90,20 40,55 C-5,88 5,175 45,210 C85,245 155,230 155,230Z" fill="#1E5C28"/>
+    <path d="M155,60 C100,100 60,155 155,230" stroke="#2D7A3A" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M155,180 C155,180 95,150 60,175 C25,200 35,265 70,285 C105,305 155,280 155,280Z" fill="#143D1C"/>
+    <path d="M155,180 C110,215 75,248 155,280" stroke="#2D7A3A" stroke-width="1" fill="none" opacity="0.4"/>
+  </svg>
+
+  <div class="section-wrap" style="position:relative; z-index:2;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
+
+      <!-- Image block -->
+      <div class="reveal" style="position:relative;">
+        <!-- NOTA DEV: interior_dos.webp — restaurante completo con decoración ecuatoriana auténtica:
+             hamaca, banderas, escalera con luces Edison, paredes con listones de bambú.
+             Efecto entrada: fade desde izquierda (añadir translateX(-40px) en reveal inicial si se desea). -->
+        <img src="imagenes/interior_dos.webp"
+             alt="Interior auténtico de Leña al Mono con decoración ecuatoriana"
+             style="width:100%; height:580px; object-fit:cover; display:block;" />
+
+        <!-- Amber border offset -->
+        <div style="position:absolute; bottom:-14px; right:-14px; width:calc(100% - 1.5rem); height:calc(100% - 1.5rem); border:1px solid rgba(200,132,26,0.28); pointer-events:none;"></div>
+
+        <!-- Floating stat badge -->
+        <div style="position:absolute; top:2rem; left:-1.5rem; background:#C8841A; color:#090E07; padding:1rem 1.2rem; text-align:center; line-height:1.15;">
+          <p class="font-display" style="font-weight:900; font-size:2.1rem;">+500</p>
+          <p style="font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; margin-top:0.15rem;">Reseñas ⭐</p>
+        </div>
+      </div>
+
+      <!-- Text block -->
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:0.6rem;">
+          <img src="imagenes/logo_mono_clean.png" class="mono-eyebrow reveal" alt="" aria-hidden="true" />
+          <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.22em; text-transform:uppercase;">Nuestra Historia</p>
+        </div>
+        <div class="reveal d1 divider"></div>
+
+        <h2 class="reveal d2 font-display" style="font-weight:900; font-size:clamp(2.5rem,4.5vw,3.75rem); line-height:1.05; color:#F0EBE1; margin-bottom:1.75rem;">
+          Cocina que<br/>nace del<br/><em style="color:#C8841A;">fuego</em>
+        </h2>
+
+        <p class="reveal d3" style="color:rgba(240,235,225,0.72); line-height:1.9; font-size:1rem; margin-bottom:1.4rem;">
+          En <strong style="color:#F0EBE1;">Leña al Mono</strong> creemos en la cocina que nace de lo simple: fuego, buenos ingredientes y tradición. Inspirados en los sabores de Ecuador, hemos creado en Barcelona un espacio donde cada plato celebra nuestra cultura.
+        </p>
+
+        <p class="reveal d4" style="color:rgba(240,235,225,0.72); line-height:1.9; font-size:1rem; margin-bottom:2.5rem;">
+          Cada mordisco es un viaje. Un plato que sabe a hogar, a familia, a domingo. Una experiencia que quienes descubren la gastronomía ecuatoriana por primera vez — nunca olvidan.
+        </p>
+
+        <a href="https://book.squareup.com/appointments/hcx6emfmutkvpv/location/LMCFB6GK0PKF1"
+           target="_blank" rel="noopener"
+           class="reveal d5 btn-ember">
+          Reservar Mesa
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     ESPECIALIDADES — BENTO GRID
+════════════════════════════════════════════════════════ -->
+<section id="especialidades" style="padding:4rem 0 8rem; background:#060C05; position:relative; overflow:hidden;">
+  <!-- Hoja decorativa esquina top-left especialidades -->
+  <svg aria-hidden="true" style="position:absolute;top:-10px;left:-15px;width:140px;height:140px;pointer-events:none;opacity:0.12;transform:rotate(25deg);" viewBox="0 0 140 140" fill="none">
+    <path d="M5,130 C5,130 -8,60 40,22 C78,-8 128,8 132,45 C136,82 108,122 72,130 C45,137 5,130 5,130Z" fill="#2D7A3A"/>
+    <path d="M5,130 C45,95 80,60 132,45" stroke="#3D9A4A" stroke-width="1.2" fill="none" opacity="0.45"/>
+  </svg>
+  <!-- Hoja decorativa esquina top-right especialidades -->
+  <svg aria-hidden="true" style="position:absolute;top:-5px;right:-10px;width:110px;height:120px;pointer-events:none;opacity:0.11;transform:rotate(-15deg) scaleX(-1);" viewBox="0 0 110 120" fill="none">
+    <path d="M4,112 C4,112 -5,52 32,18 C60,-6 98,6 102,36 C106,65 84,100 56,108 C33,115 4,112 4,112Z" fill="#1E5C28"/>
+    <path d="M4,112 C35,80 62,50 102,36" stroke="#2D7A3A" stroke-width="1" fill="none" opacity="0.4"/>
+  </svg>
+  <div class="section-wrap">
+
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:3.5rem;">
+      <div style="display:inline-flex; align-items:center; gap:0.6rem; justify-content:center;">
+        <img src="imagenes/logo_mono_clean.png" class="mono-eyebrow reveal" alt="" aria-hidden="true" />
+        <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.22em; text-transform:uppercase;">Del Ecuador a tu mesa</p>
+      </div>
+      <div class="reveal d1 divider divider-center"></div>
+      <h2 class="reveal d2 font-display" style="font-weight:900; font-size:clamp(2.5rem,5vw,4rem); color:#F0EBE1; line-height:1.05;">
+        Nuestras<br/><em style="color:#C8841A;">Especialidades</em>
+      </h2>
+    </div>
+
+    <!-- Bento -->
+    <div class="reveal d2 bento-grid">
+
+      <!-- B1: Interior íntimo (tall left) -->
+      <!-- NOTA DEV: interior_uno.webp — ambiente íntimo nocturno con plantas tropicales,
+           vinoteca de madera, escalera de mármol. Iluminación dorada cálida. -->
+      <div class="bento-card b1">
+        <img src="imagenes/interior_uno.webp" alt="Ambiente íntimo de Leña al Mono" />
+        <div class="bento-overlay"></div>
+        <div class="bento-shine"></div>
+        <div style="position:absolute; bottom:1.75rem; left:1.75rem; z-index:2;">
+          <p style="color:rgba(240,235,225,0.55); font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.3rem;">Ambiente</p>
+          <p class="font-display" style="font-weight:700; color:#F0EBE1; font-size:1.4rem; line-height:1.2;">El Rincón<br/>Perfecto</p>
+        </div>
+      </div>
+
+      <!-- B2: Mariscada (wide top-right) — ESTRELLA DE LA CASA -->
+      <!-- NOTA DEV: mariscada_parrilla.webp — parrillada de mariscos espectacular: cangrejo,
+           mejillones, gambas, patacones, ensalada de aguacate. La foto más impactante.
+           Poner como HERO de la sección y también en el hero principal. -->
+      <div class="bento-card b2">
+        <img src="imagenes/mariscada_parrilla.webp" alt="Mariscada a la parrilla — Estrella de Leña al Mono" />
+        <div class="bento-overlay"></div>
+        <div class="bento-shine"></div>
+        <div style="position:absolute; bottom:1.6rem; left:1.75rem; z-index:2;">
+          <p style="color:#C8841A; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.3rem;">⭐ Estrella de la Casa</p>
+          <p class="font-display" style="font-weight:700; color:#F0EBE1; font-size:1.9rem; line-height:1.1;">Mariscada a la Parrilla</p>
+        </div>
+      </div>
+
+      <!-- B3: Ceviche de camarones -->
+      <!-- NOTA DEV: plato_ceviche.webp — ceviche ecuatoriano de camarones con patacones
+           y aguacate. Presentación en plato blanco. Colores vibrantes naranja-verde. -->
+      <div class="bento-card b3">
+        <img src="imagenes/plato_ceviche.webp" alt="Ceviche de camarones ecuatoriano" />
+        <div class="bento-overlay"></div>
+        <div class="bento-shine"></div>
+        <div style="position:absolute; bottom:1.2rem; left:1.25rem; z-index:2;">
+          <p class="font-display" style="font-weight:700; color:#F0EBE1; font-size:1.1rem; line-height:1.2;">Ceviche de<br/>Camarones</p>
+        </div>
+      </div>
+
+      <!-- B4: Guatita -->
+      <!-- NOTA DEV: plato_guatita.webp — guatita tradicional ecuatoriana con arroz,
+           aguacate y plátano maduro. Colores cálidos amarillo-naranja con cilantro. -->
+      <div class="bento-card b4">
+        <img src="imagenes/plato_guatita.webp" alt="Guatita ecuatoriana tradicional" />
+        <div class="bento-overlay"></div>
+        <div class="bento-shine"></div>
+        <div style="position:absolute; bottom:1.2rem; left:1.25rem; z-index:2;">
+          <p class="font-display" style="font-weight:700; color:#F0EBE1; font-size:1.1rem; line-height:1.2;">Guatita<br/>Tradicional</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Ver Carta -->
+    <div style="text-align:center; margin-top:2.75rem;">
+      <a href="https://get-qr.com/es/content/c7Nj1A" target="_blank" rel="noopener" class="btn-outline">
+        Ver Carta Completa
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SERVICIOS
+════════════════════════════════════════════════════════ -->
+<section id="servicios" style="padding:8rem 0; position:relative; overflow:hidden;">
+  <!-- Hoja decorativa bottom-left servicios -->
+  <svg aria-hidden="true" style="position:absolute;bottom:-20px;left:-20px;width:180px;height:180px;pointer-events:none;opacity:0.10;transform:rotate(-30deg);" viewBox="0 0 180 180" fill="none">
+    <path d="M8,168 C8,168 -10,85 48,32 C95,-12 165,8 172,55 C179,102 148,155 100,166 C62,175 8,168 8,168Z" fill="#1E5C28"/>
+    <path d="M8,168 C58,130 98,90 172,55" stroke="#2D7A3A" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M20,148 C8,90 62,32 130,18" fill="#0F3A18" opacity="0.45"/>
+  </svg>
+  <!-- Hoja decorativa top-right servicios -->
+  <svg aria-hidden="true" style="position:absolute;top:-15px;right:-15px;width:150px;height:150px;pointer-events:none;opacity:0.09;transform:rotate(10deg) scaleX(-1);" viewBox="0 0 150 150" fill="none">
+    <path d="M6,140 C6,140 -8,68 42,26 C84,-8 140,8 145,48 C150,88 120,132 80,142 C48,150 6,140 6,140Z" fill="#2D7A3A"/>
+    <path d="M6,140 C48,105 88,70 145,48" stroke="#3D9A4A" stroke-width="1.2" fill="none" opacity="0.38"/>
+  </svg>
+  <div class="section-wrap">
+
+    <!-- Header -->
+    <div style="margin-bottom:3.5rem;">
+      <div style="display:inline-flex; align-items:center; gap:0.6rem;">
+        <img src="imagenes/logo_mono_clean.png" class="mono-eyebrow reveal" alt="" aria-hidden="true" />
+        <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.22em; text-transform:uppercase;">Más que un restaurante</p>
+      </div>
+      <div class="reveal d1 divider"></div>
+      <h2 class="reveal d2 font-display" style="font-weight:900; font-size:clamp(2.5rem,4vw,3.5rem); color:#F0EBE1; line-height:1.05;">
+        Una experiencia<br/><em style="color:#C8841A;">completa</em>
+      </h2>
+    </div>
+
+    <!-- Grid -->
+    <div class="service-grid">
+
+      <!-- Chill Out (image card, tall) -->
+      <!-- NOTA DEV: interior_tres_zona_cockteles.webp — terraza luminosa con sillas blancas,
+           cojines mostaza, palmeras, techo de cristal y luces de hada. Ambiente relajado premium. -->
+      <div class="reveal service-card sc-chillout" style="position:relative;">
+        <img src="imagenes/interior_tres_zona_cockteles.webp"
+             alt="Zona Chill Out y terraza de Leña al Mono"
+             style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" />
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,12,5,0.93) 0%, rgba(7,12,5,0.35) 65%, transparent 100%);"></div>
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:2.5rem;">
+          <p style="color:#C8841A; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">Terraza al aire libre</p>
+          <h3 class="font-display" style="font-weight:700; font-size:2.1rem; color:#F0EBE1; margin-bottom:0.85rem; line-height:1.15;">Zona Chill Out</h3>
+          <p style="color:rgba(240,235,225,0.75); line-height:1.75; font-size:0.95rem; max-width:400px;">
+            Disfruta de nuestra terraza pensada para relajarte y compartir. Un ambiente perfecto para desconectar bajo la luz del día o las estrellas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Eventos -->
+      <div class="reveal d2 service-card sc-eventos" style="padding:2.25rem; display:flex; flex-direction:column;">
+        <div style="width:46px; height:46px; background:rgba(45,122,58,0.18); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.5rem;">🔥</div>
+        <h3 class="font-display" style="font-weight:700; font-size:1.45rem; color:#F0EBE1; margin-bottom:0.85rem; line-height:1.2;">Eventos<br/>Especiales</h3>
+        <p style="color:rgba(240,235,225,0.68); line-height:1.75; font-size:0.92rem; flex:1;">
+          Cumpleaños, reuniones privadas o eventos corporativos. Creamos experiencias únicas donde la gastronomía y el ambiente son los protagonistas.
+        </p>
+        <a href="https://book.squareup.com/appointments/hcx6emfmutkvpv/location/LMCFB6GK0PKF1"
+           target="_blank" rel="noopener"
+           style="color:#C8841A; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; margin-top:1.75rem; display:inline-flex; align-items:center; gap:0.4rem;">
+          Solicitar Evento →
+        </a>
+      </div>
+
+      <!-- Catering -->
+      <div class="reveal d3 service-card sc-catering" style="padding:2.25rem; display:flex; flex-direction:column;">
+        <div style="width:46px; height:46px; background:rgba(45,122,58,0.18); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.5rem;">🍽️</div>
+        <h3 class="font-display" style="font-weight:700; font-size:1.45rem; color:#F0EBE1; margin-bottom:0.85rem; line-height:1.2;">Catering<br/>Personalizado</h3>
+        <p style="color:rgba(240,235,225,0.68); line-height:1.75; font-size:0.92rem; flex:1;">
+          Llevamos lo mejor de nuestra cocina a donde lo necesites. Auténtico sabor ecuatoriano a la leña para cualquier tipo de evento.
+        </p>
+        <a href="#contacto"
+           style="color:#C8841A; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; margin-top:1.75rem; display:inline-flex; align-items:center; gap:0.4rem;">
+          Consultar →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     PRUEBA SOCIAL — TESTIMONIOS
+════════════════════════════════════════════════════════ -->
+<section style="padding:4rem 0 8rem; background:#060C05;">
+  <div class="section-wrap">
+
+    <div style="text-align:center; margin-bottom:4rem;">
+      <div style="display:inline-flex; align-items:center; gap:0.6rem; justify-content:center;">
+        <img src="imagenes/logo_mono_clean.png" class="mono-eyebrow reveal" alt="" aria-hidden="true" />
+        <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.22em; text-transform:uppercase;">Lo que dicen nuestros clientes</p>
+      </div>
+      <div class="reveal d1 divider divider-center"></div>
+      <h2 class="reveal d2 font-display" style="font-weight:900; font-size:clamp(2.2rem,4vw,3rem); color:#F0EBE1; line-height:1.1;">
+        Palabras que<br/><em style="color:#C8841A;">nos llenan</em>
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:880px; margin:0 auto;">
+
+      <!-- Testimonio 1 -->
+      <div class="reveal testi-card" style="padding:2.5rem; position:relative;">
+        <div class="font-display" style="position:absolute; top:1.25rem; right:1.75rem; font-size:5.5rem; color:rgba(200,132,26,0.08); line-height:1; font-weight:900; pointer-events:none;">"</div>
+        <div style="margin-bottom:1.1rem; font-size:1rem; color:#C8841A; letter-spacing:0.1em;">★★★★★</div>
+        <p style="color:rgba(240,235,225,0.85); line-height:1.85; font-style:italic; font-size:0.97rem; margin-bottom:1.75rem;">
+          "The smoky grilled meats at Leña al Mono take you straight to Ecuador! The flavors, the atmosphere, the warmth of the staff — absolutely unforgettable."
+        </p>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div style="width:40px; height:40px; background:linear-gradient(135deg,#C8841A,#E8A030); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.9rem; color:#090E07; flex-shrink:0;">A</div>
+          <div>
+            <p style="color:#F0EBE1; font-weight:600; font-size:0.88rem;">Ana R.</p>
+            <p style="color:rgba(240,235,225,0.42); font-size:0.72rem;">Google Reviews</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="reveal d2 testi-card" style="padding:2.5rem; position:relative;">
+        <div class="font-display" style="position:absolute; top:1.25rem; right:1.75rem; font-size:5.5rem; color:rgba(200,132,26,0.08); line-height:1; font-weight:900; pointer-events:none;">"</div>
+        <div style="margin-bottom:1.1rem; font-size:1rem; color:#C8841A; letter-spacing:0.1em;">★★★★★</div>
+        <p style="color:rgba(240,235,225,0.85); line-height:1.85; font-style:italic; font-size:0.97rem; margin-bottom:1.75rem;">
+          "Warm ambiance and authentic flavors make every visit unforgettable. The ceviche and the grilled specialties are a must-try. A real gem in Barcelona."
+        </p>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div style="width:40px; height:40px; background:linear-gradient(135deg,#2D5A27,#4A8C42); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.9rem; color:#F0EBE1; flex-shrink:0;">L</div>
+          <div>
+            <p style="color:#F0EBE1; font-weight:600; font-size:0.88rem;">Luis M.</p>
+            <p style="color:rgba(240,235,225,0.42); font-size:0.72rem;">Google Reviews</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     HORARIOS & CONTACTO
+════════════════════════════════════════════════════════ -->
+<section id="contacto" style="padding:8rem 0; position:relative; overflow:hidden;">
+  <!-- Hoja decorativa contacto right -->
+  <svg aria-hidden="true" style="position:absolute;right:-30px;top:40%;transform:translateY(-50%);width:140px;height:280px;pointer-events:none;opacity:0.08;" viewBox="0 0 140 280" fill="none">
+    <path d="M135,55 C135,55 80,18 35,50 C-5,80 5,158 40,192 C75,225 135,210 135,210Z" fill="#1E5C28"/>
+    <path d="M135,55 C88,92 52,142 135,210" stroke="#2D7A3A" stroke-width="1.5" fill="none" opacity="0.45"/>
+    <path d="M135,165 C135,165 85,138 52,162 C20,186 30,245 62,262 C94,278 135,255 135,255Z" fill="#143D1C"/>
+    <path d="M135,165 C95,200 60,232 135,255" stroke="#2D7A3A" stroke-width="1" fill="none" opacity="0.35"/>
+  </svg>
+  <div class="section-wrap">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;">
+
+      <!-- Horarios + Dirección -->
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:0.6rem;">
+          <img src="imagenes/logo_mono_clean.png" class="mono-eyebrow reveal" alt="" aria-hidden="true" />
+          <p class="reveal font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.22em; text-transform:uppercase;">Ven a visitarnos</p>
+        </div>
+        <div class="reveal d1 divider"></div>
+        <h2 class="reveal d2 font-display" style="font-weight:900; font-size:clamp(2rem,3.5vw,2.75rem); color:#F0EBE1; line-height:1.1; margin-bottom:2rem;">
+          Horario &<br/><em style="color:#C8841A;">Dirección</em>
+        </h2>
+
+        <!-- Dirección -->
+        <div class="reveal d3" style="margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid rgba(240,235,225,0.07);">
+          <p style="color:rgba(240,235,225,0.42); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.6rem;">📍 Dirección</p>
+          <p style="color:#F0EBE1; font-size:1rem; line-height:1.7;">
+            Carrer d'Enric Prat de la Riba, 65<br/>
+            08901 L'Hospitalet de Llobregat<br/>
+            Barcelona
+          </p>
+        </div>
+
+        <!-- Horario -->
+        <div class="reveal d4">
+          <p style="color:rgba(240,235,225,0.42); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1rem;">🕐 Horario</p>
+
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.6); font-size:0.9rem;">Miércoles</span>
+            <span style="color:#F0EBE1; font-size:0.9rem;">12:30–17:00</span>
+          </div>
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.6); font-size:0.9rem;">Jueves</span>
+            <span style="color:#F0EBE1; font-size:0.9rem;">12:30–17:00 · 20:00–23:30</span>
+          </div>
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.6); font-size:0.9rem;">Viernes</span>
+            <span style="color:#F0EBE1; font-size:0.9rem;">12:30–17:00 · 20:00–24:00</span>
+          </div>
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.6); font-size:0.9rem;">Sábado</span>
+            <span style="color:#F0EBE1; font-size:0.9rem;">10:00–24:00</span>
+          </div>
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.6); font-size:0.9rem;">Domingo</span>
+            <span style="color:#F0EBE1; font-size:0.9rem;">10:00–18:00</span>
+          </div>
+          <div class="h-row" style="display:flex; justify-content:space-between; padding:0.8rem 0;">
+            <span style="color:rgba(240,235,225,0.3); font-size:0.9rem;">Lunes & Martes</span>
+            <span style="color:rgba(240,235,225,0.3); font-size:0.9rem;">Cerrado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa + CTA final -->
+      <div class="reveal d2">
+
+        <!-- Google Maps -->
+        <div style="position:relative; margin-bottom:2rem; overflow:hidden;">
+          <iframe
+            src="https://maps.google.com/maps?q=Carrer+d'Enric+Prat+de+la+Riba+65+L'Hospitalet+de+Llobregat+Barcelona&output=embed"
+            width="100%" height="290"
+            class="map-frame"
+            style="border:none; display:block;"
+            allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div style="position:absolute; inset:0; border:1px solid rgba(200,132,26,0.25); pointer-events:none;"></div>
+        </div>
+
+        <!-- CTA Box -->
+        <div style="background:linear-gradient(135deg,#0E1A0B,#111E0E); border:1px solid rgba(200,132,26,0.18); padding:2.5rem; text-align:center;">
+          <p class="font-display" style="font-style:italic; color:#C8841A; font-size:0.82rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.6rem;">¿Listo para el sabor?</p>
+          <h3 class="font-display" style="font-weight:900; font-size:1.8rem; color:#F0EBE1; margin-bottom:0.7rem; line-height:1.2;">
+            Haz tu Reserva <em style="color:#C8841A;">Ahora</em>
+          </h3>
+          <p style="color:rgba(240,235,225,0.68); font-size:0.92rem; margin-bottom:1.75rem;">
+            Mesa para 2 o para 20. Siempre bienvenidos en Leña al Mono.
+          </p>
+          <a href="https://book.squareup.com/appointments/hcx6emfmutkvpv/location/LMCFB6GK0PKF1"
+             target="_blank" rel="noopener"
+             class="btn-ember">
+            Reservar Ahora
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<footer style="background:#050A04; border-top:1px solid rgba(45,122,58,0.18); padding:3.5rem 0 2rem; position:relative; overflow:hidden;">
+  <!-- Hoja footer izquierda -->
+  <svg aria-hidden="true" style="position:absolute;left:-25px;top:50%;transform:translateY(-50%);width:120px;height:120px;pointer-events:none;opacity:0.07;transform:translateY(-50%) rotate(20deg);" viewBox="0 0 120 120" fill="none">
+    <path d="M5,112 C5,112 -5,52 36,18 C68,-8 108,8 112,40 C116,72 90,106 60,114 C36,120 5,112 5,112Z" fill="#2D7A3A"/>
+    <path d="M5,112 C40,80 72,50 112,40" stroke="#3D9A4A" stroke-width="1" fill="none" opacity="0.4"/>
+  </svg>
+  <!-- Hoja footer derecha -->
+  <svg aria-hidden="true" style="position:absolute;right:-25px;top:50%;width:120px;height:120px;pointer-events:none;opacity:0.07;transform:translateY(-50%) rotate(-20deg) scaleX(-1);" viewBox="0 0 120 120" fill="none">
+    <path d="M5,112 C5,112 -5,52 36,18 C68,-8 108,8 112,40 C116,72 90,106 60,114 C36,120 5,112 5,112Z" fill="#2D7A3A"/>
+    <path d="M5,112 C40,80 72,50 112,40" stroke="#3D9A4A" stroke-width="1" fill="none" opacity="0.4"/>
+  </svg>
+  <div class="section-wrap" style="position:relative; z-index:2;">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:1.5rem;">
+      <!-- Logo -->
+      <img src="imagenes/logo_redondo_mono.png" alt="Leña al Mono" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 0 12px rgba(45,122,58,0.35));" />
+      <!-- Name -->
+      <div>
+        <p class="font-display" style="font-weight:900; font-size:1.3rem; color:#F0EBE1; letter-spacing:0.06em;">LEÑA AL MONO</p>
+        <p style="color:rgba(240,235,225,0.42); font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; margin-top:0.3rem;">Auténtica Parrilla Ecuatoriana · Barcelona</p>
+      </div>
+      <!-- Social -->
+      <a href="https://www.instagram.com/lenaalmono/" target="_blank" rel="noopener"
+         style="color:rgba(240,235,225,0.55); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; transition:color 0.3s;"
+         onmouseover="this.style.color='#C8841A'" onmouseout="this.style.color='rgba(240,235,225,0.55)'">
+        Instagram @lenaalmono
+      </a>
+      <!-- Address -->
+      <p style="color:rgba(240,235,225,0.3); font-size:0.72rem; letter-spacing:0.1em;">
+        Carrer d'Enric Prat de la Riba, 65 · 08901 L'Hospitalet de Llobregat · Barcelona
+      </p>
+      <!-- Copyright -->
+      <p style="color:rgba(240,235,225,0.2); font-size:0.65rem; letter-spacing:0.1em; margin-top:0.5rem;">
+        © 2025 Leña al Mono. Todos los derechos reservados.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Scroll Reveal ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ── Nav scroll ── */
+  const nav = document.getElementById('main-nav');
+  const navCarta = document.getElementById('nav-carta');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+      if (navCarta) navCarta.style.display = 'block';
+    } else {
+      nav.classList.remove('scrolled');
+      if (navCarta) navCarta.style.display = 'none';
+    }
+  });
+
+  /* ── Ember / Brasa particles ── */
+  const wrap = document.getElementById('embersWrap');
+  function spawnEmber() {
+    const e = document.createElement('div');
+    const size = 2 + Math.random() * 4;
+    const startX = 10 + Math.random() * 80;
+    const drift = (Math.random() - 0.5) * 120;
+    const dur = 3500 + Math.random() * 3000;
+    const colors = ['#E8A030','#C8841A','#FF8C00','#FFB347'];
+    Object.assign(e.style, {
+      position: 'absolute',
+      bottom: '0',
+      left: startX + '%',
+      width: size + 'px',
+      height: size + 'px',
+      borderRadius: '50%',
+      background: `radial-gradient(circle, ${colors[Math.floor(Math.random()*colors.length)]} 0%, transparent 70%)`,
+      pointerEvents: 'none',
+    });
+    wrap.appendChild(e);
+    e.animate([
+      { transform: `translateY(0) translateX(0) scale(1)`, opacity: 0.9 },
+      { transform: `translateY(-${300 + Math.random()*200}px) translateX(${drift}px) scale(0.2)`, opacity: 0 }
+    ], { duration: dur, easing: 'cubic-bezier(.25,.46,.45,.94)' }).onfinish = () => e.remove();
+  }
+  setInterval(spawnEmber, 500);
+</script>
+
+</body>
+</html>
